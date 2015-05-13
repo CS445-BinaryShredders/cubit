@@ -12,7 +12,7 @@ package cubit;
  * @author BinaryShredders
  */
 public class Block {
-    private boolean IsActive;
+    private boolean isActive;
     private BlockType Type;
     private float x, y, z;
     
@@ -54,10 +54,12 @@ public class Block {
     }
     
     /**
-     * This method allows us to place this block to ...
-     * @param x
-     * @param y
-     * @param z 
+     * This method allows us to place this block in the scene.
+     * The 3-dimensional coordinate specified will place the 
+     * block's center at this location
+     * @param x-coordinate
+     * @param y-coordinate
+     * @param z-coordinate
      */
     public void setCoords(float x, float y, float z) {
         this.x = x;
@@ -65,5 +67,29 @@ public class Block {
         this.z = z;
     }
     
+    /**
+     * This method returns true if this block is active,
+     * a.k.a. visible in the scene. Otherwise, this method
+     * returns false.
+     */
+    public boolean isActive() {
+        return isActive;
+    }
+    
+    /**
+     * Allows us to set whether this block is active and 
+     * visible on the screen (true) or not active.
+     * @param boolean that reflects whether the block is active or inactive
+     */
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+    
+    /**
+     * Returns the ID of this block type.
+     */
+    public int getID() {
+        return Type.GetID();
+    }
     
 }
