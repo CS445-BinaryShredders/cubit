@@ -77,8 +77,9 @@ public class Block {
     }
     
     /**
-     * Allows us to set whether this block is active and 
-     * visible on the screen (true) or not active.
+     * Allows us to set whether this block is active and visible on the screen 
+     * or not active. Any block that is inactive will not render. True means
+     * render the block. False means the block will not be rendered.
      * @param boolean that reflects whether the block is active or inactive
      */
     public void setActive(boolean active) {
