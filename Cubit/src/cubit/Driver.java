@@ -64,6 +64,13 @@ public class Driver
         glEnableClientState(GL_COLOR_ARRAY);
         glEnable(GL_DEPTH_TEST);
         
+        /*
+         * The following lines of code
+         * are written for texture mapping.
+         */
+        glEnable(GL_TEXTURE_2D);
+        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+        
         
     }
         
