@@ -29,6 +29,36 @@ public class Chunk {
     private int StartX, StartY, StartZ;
     private Random r;
     
+    public Chunk (int startX, int startY, int startZ) {
+        r = new Random();
+        Blocks = new Block[CHUNK_SIZE][CHUNK_SIZE][CHUNK_SIZE];
+        for (int x = 0; x < CHUNK_SIZE; x++) {
+            for (int y = 0; y < CHUNK_SIZE; y++) {
+                for (int z = 0; z < CHUNK_SIZE; z++) {
+                    if (r.nextFloat() > 0.7f) {
+                        Blocks[x][y][z] = new Block (Block.BlockType.BlockType_Grass);
+                    }
+                    else if (r.nextFloat() > 0.4f) {
+                        Blocks[x][y][z] = new Block (Block.BlockType.BlockType_Dirt);    
+                    }
+                    else if (r.nextFloat() > 0.2f) {
+                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Water);
+                    }
+                    else {
+                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Grass);
+                    }
+                }
+            }
+        }
+        
+        VBOColorHandle = glGenBuffers();
+        VBOVertexHandle = glGenBuffers();
+        StartX = startX;
+        StartY = startY;
+        StartZ = startZ;
+        rebuildMesh(startX, startY, startZ);
+    }
+    
     public void render() {
         glPushMatrix();
             glBindBuffer(GL_ARRAY_BUFFER, VBOVertexHandle);
@@ -76,7 +106,7 @@ public class Chunk {
         for (int i = 0; i < cubeColors.length; i++) {
             cubeColors[i] = CubeColorArray[i % CubeColorArray.length];
         }
-    return cubeColors;
+        return cubeColors;
     }
     
     public static float[] createCube(float x, float y, float z) {
@@ -129,36 +159,6 @@ public class Chunk {
                 return new float[] { 0, 0f, 1f};
         }
         return new float[] {1, 1, 1};
-    }
-    
-    public Chunk (int startX, int startY, int startZ) {
-        r = new Random();
-        Blocks = new Block[CHUNK_SIZE][CHUNK_SIZE][CHUNK_SIZE];
-        for (int x = 0; x < CHUNK_SIZE; x++) {
-            for (int y = 0; y < CHUNK_SIZE; y++) {
-                for (int z = 0; z < CHUNK_SIZE; z++) {
-                    if (r.nextFloat() > 0.7f) {
-                        Blocks[x][y][z] = new Block (Block.BlockType.BlockType_Grass);
-                    }
-                    else if (r.nextFloat() > 0.4f) {
-                        Blocks[x][y][z] = new Block (Block.BlockType.BlockType_Dirt);    
-                    }
-                    else if (r.nextFloat() > 0.2f) {
-                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Water);
-                    }
-                    else {
-                        Blocks[x][y][z] = new Block(Block.BlockType.BlockType_Grass);
-                    }
-                }
-            }
-        }
-        
-        VBOColorHandle = glGenBuffers();
-        VBOVertexHandle = glGenBuffers();
-        StartX = startX;
-        StartY = startY;
-        StartZ = startZ;
-        rebuildMesh(startX, startY, startZ);
     }
 }
     

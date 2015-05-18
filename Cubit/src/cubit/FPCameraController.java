@@ -23,19 +23,17 @@ public class FPCameraController
      * These two Vector3f objects are 3d vectors
      * that store the camera's position.
      */
-    private Vector3f position = null;
-    
+    private Vector3f position = null;    
     // ????? what is lPosition for?
     private Vector3f lPosition = null;
-    
     /* The rotation around the Y-axis of the camera */
-    private float yaw = 0.0f;
-    
+    private float yaw = 0.0f;    
     /* The rotation around the X-axis of the camera */
-    private float pitch = 0.0f;
-    
+    private float pitch = 0.0f;    
     /* ...Not quite sure what you're used for yet... */
     private Vector3Float me;
+    
+    private Chunk earth = new Chunk(0,0,0);
     
     /**
      * Constructs this FPCameraController object by instantiating
@@ -233,7 +231,7 @@ public class FPCameraController
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
             
             // Draw/render your scene
-            render();
+            earth.render();
             
             // Draw the render buffer to the screen
             Display.update();
@@ -253,35 +251,30 @@ public class FPCameraController
                 glVertex3f(-1.0f, 1.0f, 1.0f);
                 glVertex3f(-1.0f,-1.0f, 1.0f);
                 glVertex3f( 1.0f,-1.0f, 1.0f);
-                
                 //back
                 glColor3f(0.0f, 1.0f, 0.0f);
                 glVertex3f(-1.0f, 1.0f,-1.0f);
                 glVertex3f( 1.0f, 1.0f,-1.0f);
                 glVertex3f( 1.0f,-1.0f,-1.0f);
                 glVertex3f(-1.0f,-1.0f,-1.0f);
-                
                 //top
                 glColor3f(0.0f, 1.0f, 1.0f);
                 glVertex3f( 1.0f, 1.0f,-1.0f);
                 glVertex3f(-1.0f, 1.0f,-1.0f);
                 glVertex3f(-1.0f, 1.0f, 1.0f);
                 glVertex3f( 1.0f, 1.0f, 1.0f);
-                
                 //bottom
                 glColor3f(1.0f, 0.0f, 0.0f);
                 glVertex3f( 1.0f,-1.0f, 1.0f);
                 glVertex3f(-1.0f,-1.0f, 1.0f);
                 glVertex3f(-1.0f,-1.0f,-1.0f);
                 glVertex3f( 1.0f,-1.0f,-1.0f);
-                
                 //left
                 glColor3f(1.0f, 0.0f, 1.0f);
                 glVertex3f(-1.0f, 1.0f, 1.0f);
                 glVertex3f(-1.0f, 1.0f,-1.0f);
                 glVertex3f(-1.0f,-1.0f,-1.0f);
                 glVertex3f(-1.0f,-1.0f, 1.0f);
-                
                 //right
                 glColor3f(1.0f, 1.0f, 0.0f);
                 glVertex3f( 1.0f, 1.0f,-1.0f);
