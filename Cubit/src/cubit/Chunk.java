@@ -140,6 +140,8 @@ public class Chunk {
     
     public static float[] createTexCube(float x, float y, Block block) {
         float offset = (1024f / 16) / 1024f;
+        
+        // *** This switch case is incomplete ****
         switch(block.getID()) {
             case 1:
                 return new float[] {
