@@ -10,7 +10,7 @@ import org.lwjgl.util.glu.GLU;
 
 public class Driver 
 {
-    private FPCameraController fp = new FPCameraController(0f, 0f, 0f);
+    private FPCameraController fp;
     private DisplayMode displayMode;
         
     public void start()
@@ -19,7 +19,8 @@ public class Driver
         {
             createWindow();
             initGL();
-            fp.gameLoop();
+            fp = new FPCameraController(0f, 0f, 0f);
+            fp.gameLoop(); // render method
         }
         catch(Exception e)
         {
@@ -41,7 +42,7 @@ public class Driver
             }
         }
         Display.setDisplayMode(displayMode);
-        Display.setTitle("Cubit");
+        Display.setTitle("+ c u b i t +");
         Display.create();
     }
     
@@ -53,6 +54,17 @@ public class Driver
         GLU.gluPerspective(100.0f, (float)displayMode.getWidth()/(float)displayMode.getHeight(), 0.1f, 300.0f);
         glMatrixMode(GL_MODELVIEW);
         glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+        
+        /* 
+         * The following lines of code
+         * are written to accomodate
+         * for new Block and Chunk objs.
+         */
+        glEnableClientState(GL_VERTEX_ARRAY);
+        glEnableClientState(GL_COLOR_ARRAY);
+        glEnable(GL_DEPTH_TEST);
+        
+        
     }
         
     public static void main(String[] args)

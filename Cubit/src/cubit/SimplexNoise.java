@@ -1,3 +1,5 @@
+package cubit;
+
 import java.util.Random;
 
 public class SimplexNoise {

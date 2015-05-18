@@ -42,6 +42,8 @@ public class Chunk {
     public void rebuildMesh (float startX, float startY, float startZ) {
         VBOColorHandle = glGenBuffers();
         VBOVertexHandle = glGenBuffers();
+        
+        // Below, VertexPositionData is our Vertex Buffer Object
         FloatBuffer VertexPositionData = BufferUtils.createFloatBuffer ((
             CHUNK_SIZE *CHUNK_SIZE * CHUNK_SIZE) *6 * 12);
         FloatBuffer VertexColorData = BufferUtils.createFloatBuffer((CHUNK_SIZE *
