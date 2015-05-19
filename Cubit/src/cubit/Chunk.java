@@ -35,7 +35,7 @@ public class Chunk {
     /* For textures */
     private int VBOTextureHandle;
     private Texture texture;
-    
+        
     public Chunk (int startX, int startY, int startZ) {
         try
         {
@@ -47,7 +47,7 @@ public class Chunk {
             e.printStackTrace();
         }
         
-        r = new Random();
+        r = new Random(System.currentTimeMillis());
         Blocks = new Block[CHUNK_SIZE][CHUNK_SIZE][CHUNK_SIZE];
         for (int x = 0; x < CHUNK_SIZE; x++) {
             for (int y = 0; y < CHUNK_SIZE; y++) {
@@ -105,14 +105,54 @@ public class Chunk {
                     CHUNK_SIZE * CHUNK_SIZE) * 6 * 12);
         for (float x = 0; x < CHUNK_SIZE; x++) {
             for (float z = 0; z < CHUNK_SIZE; z++) {
+                
+                //get a heigt for this x-z-coordinate. Not sure if this is right.
+                //Can adjust the first and second arguments of the constructor
+                //and the startY and "amplitude?" (getNoise() returns a number between -1 and 1,
+                //so this number is just amplifying that number)
+                SimplexNoise noise0 = new SimplexNoise(2, 0.4, (int)System.currentTimeMillis());
+                
+                Random r = new Random(System.currentTimeMillis());
+                
+                int height0 = (int)((1.5 * 
+                        noise0.getNoise((int)(startX + x / 7),
+                        /*not sure what to put for this arg*/25,
+                        (int)(startZ + z / 7))) * CUBE_LENGTH);
+                if (r.nextInt(10) > 7)
+                    height0 = 0;
+                
+                int height1 = (int)((1.5 * 
+                        noise0.getNoise((int)(startX + x / 5), 25,
+                        (int)(startZ + z / 5))) * CUBE_LENGTH);
+                if (r.nextInt(10) > 6)
+                    height1 = 0;
+                
+                int height2 = (int)((1.5 * 
+                        noise0.getNoise((int)(startX + x / 4), 25,
+                        (int)(startZ + z / 4))) * CUBE_LENGTH);
+                if (r.nextInt(10) > 5)
+                    height0 = 0;
+                
+                int height3 = (int)((1.5 * 
+                        noise0.getNoise((int)(startX + x / 3), 25,
+                        (int)(startZ + z / 3))) * CUBE_LENGTH);
+                if (r.nextInt(10) > 4)
+                    height0 = 0;
+                
+                int height = 20 + height0 + height1 + height2 + height3;//Math.max(Math.max(height0, height1), height2);
+                
                 for (float y = 0; y < CHUNK_SIZE; y++) {
-                    VertexPositionData.put(createCube((float)(startX + x 
-                            * CUBE_LENGTH), (float)(y * CUBE_LENGTH + (int)
-                                    (CHUNK_SIZE * .8)), (float)(startZ + z * 
-                                            CUBE_LENGTH)));
-                    VertexColorData.put(createCubeVertexCol(getCubeColor(Blocks[(int)x][(int) y][(int) z])));
-                    VertexTextureData.put(createTexCube((float) 0, (float) 0,
-                            Blocks[(int)(x)][(int)(y)][(int)(z)]));
+                    //not sure if this is how we're supposed to do this
+                    if (y < height)
+                    {
+                        VertexPositionData.put(createCube((float)(startX + x 
+                                * CUBE_LENGTH), (float)(y * CUBE_LENGTH + (int)
+                                        (CHUNK_SIZE * .8)), (float)(startZ + z * 
+                                                CUBE_LENGTH)));
+                        VertexColorData.put(createCubeVertexCol(getCubeColor(Blocks[(int)x][(int) y][(int) z])));
+                        VertexTextureData.put(createTexCube((float) 0, (float) 0,
+                                Blocks[(int)(x)][(int)(y)][(int)(z)]));
+                    }
                 }
             }
         }
@@ -423,7 +463,7 @@ public class Chunk {
             case 5:
                 return new float[] {0f, 0f, 0f};
         }
-                */
+        */
         return new float[] {1, 1, 1};
     }
 }

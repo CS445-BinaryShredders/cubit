@@ -12,7 +12,7 @@ public class SimplexNoise {
     double persistence;
     int seed;
 
-    public SimplexNoise(int largestFeature,double persistence, int seed){
+    public SimplexNoise(int largestFeature, double persistence, int seed){
         this.largestFeature=largestFeature;
         this.persistence=persistence;
         this.seed=seed;
