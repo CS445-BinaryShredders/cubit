@@ -95,7 +95,7 @@ public class Chunk {
         VBOColorHandle = glGenBuffers();
         VBOVertexHandle = glGenBuffers();
         VBOTextureHandle = glGenBuffers();
-        
+                        
         // Below, VertexPositionData is our Vertex Buffer Object
         FloatBuffer VertexPositionData = BufferUtils.createFloatBuffer ((
             CHUNK_SIZE *CHUNK_SIZE * CHUNK_SIZE) *6 * 12);
@@ -103,43 +103,30 @@ public class Chunk {
                     CHUNK_SIZE * CHUNK_SIZE) * 6 * 12);
         FloatBuffer VertexTextureData = BufferUtils.createFloatBuffer((CHUNK_SIZE * 
                     CHUNK_SIZE * CHUNK_SIZE) * 6 * 12);
-        for (float x = 0; x < CHUNK_SIZE; x++) {
-            for (float z = 0; z < CHUNK_SIZE; z++) {
+        
+        
+        SimplexNoise noise = new SimplexNoise(2, 0.1, (int)System.currentTimeMillis());
+                     
+        for (float x = 0; x < CHUNK_SIZE; x++) 
+        {
+            for (float z = 0; z < CHUNK_SIZE; z++) 
+            {                       
+                double height = 0.0;
+                int octaves = 18;
+                for (int resolution = octaves; resolution > 1; resolution--)
+                {
+                    for (int y = 0; y < CHUNK_SIZE; ++y)
+                    {
+                        int i = (int)(startX + x / resolution);
+                        int j = (int)(startY + y / resolution);
+                        int k = (int)(startZ + z / resolution);
+
+                        double temp = startY + (1 + noise.getNoise(i, j, k)) * CUBE_LENGTH / 2;
+                        height += (int) temp;                   
+                    }
+                }
                 
-                //get a heigt for this x-z-coordinate. Not sure if this is right.
-                //Can adjust the first and second arguments of the constructor
-                //and the startY and "amplitude?" (getNoise() returns a number between -1 and 1,
-                //so this number is just amplifying that number)
-                SimplexNoise noise0 = new SimplexNoise(2, 0.4, (int)System.currentTimeMillis());
-                
-                Random r = new Random(System.currentTimeMillis());
-                
-                int height0 = (int)((1.5 * 
-                        noise0.getNoise((int)(startX + x / 7),
-                        /*not sure what to put for this arg*/25,
-                        (int)(startZ + z / 7))) * CUBE_LENGTH);
-                if (r.nextInt(10) > 7)
-                    height0 = 0;
-                
-                int height1 = (int)((1.5 * 
-                        noise0.getNoise((int)(startX + x / 5), 25,
-                        (int)(startZ + z / 5))) * CUBE_LENGTH);
-                if (r.nextInt(10) > 6)
-                    height1 = 0;
-                
-                int height2 = (int)((1.5 * 
-                        noise0.getNoise((int)(startX + x / 4), 25,
-                        (int)(startZ + z / 4))) * CUBE_LENGTH);
-                if (r.nextInt(10) > 5)
-                    height0 = 0;
-                
-                int height3 = (int)((1.5 * 
-                        noise0.getNoise((int)(startX + x / 3), 25,
-                        (int)(startZ + z / 3))) * CUBE_LENGTH);
-                if (r.nextInt(10) > 4)
-                    height0 = 0;
-                
-                int height = 20 + height0 + height1 + height2 + height3;//Math.max(Math.max(height0, height1), height2);
+                height /= octaves;
                 
                 for (float y = 0; y < CHUNK_SIZE; y++) {
                     //not sure if this is how we're supposed to do this
