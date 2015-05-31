@@ -11,7 +11,7 @@ package cubit;
  */
 public class Block {
     private boolean isActive;
-    private BlockType Type;
+    private BlockType type;
     private float x, y, z;
     
     public enum BlockType {
@@ -48,7 +48,7 @@ public class Block {
      * @param desired BlockType
      */
     public Block(BlockType type) {
-        Type = type;
+        this.type = type;
     }
     
     /**
@@ -63,6 +63,11 @@ public class Block {
         this.x = x;
         this.y = y;
         this.z = z;
+    }
+    
+    public void setType(BlockType newType)
+    {
+        type = newType;
     }
     
     /**
@@ -88,7 +93,7 @@ public class Block {
      * Returns the ID of this block type.
      */
     public int getID() {
-        return Type.GetID();
+        return type.GetID();
     }
     
 }

@@ -106,9 +106,11 @@ public class Chunk {
         
         
         SimplexNoise noise = new SimplexNoise(2, 0.1, (int)System.currentTimeMillis());
-                     
+                 
+        
         for (float x = 0; x < CHUNK_SIZE; x++) 
         {
+            r = new Random(System.currentTimeMillis());
             for (float z = 0; z < CHUNK_SIZE; z++) 
             {                       
                 double height = 0.0;
@@ -127,11 +129,77 @@ public class Chunk {
                 }
                 
                 height /= octaves;
+                height = (int) height;
+                
                 
                 for (float y = 0; y < CHUNK_SIZE; y++) {
                     //not sure if this is how we're supposed to do this
                     if (y < height)
                     {
+                        
+                        Block.BlockType newType = Block.BlockType.BlockType_Grass;
+                        if (y == height - 1)
+                        {
+                            int rand = r.nextInt(3);
+                            
+                            switch (rand)
+                            {
+                                case 0:
+                                {
+                                    newType = Block.BlockType.BlockType_Grass;
+                                    break;
+                                }
+                                case 1:
+                                {
+                                    newType = Block.BlockType.BlockType_Sand;
+                                    break;
+                                }
+                                case 2:
+                                {   
+                                    newType = Block.BlockType.BlockType_Water;
+                                    break;
+                                }
+                            }
+                            
+                        }
+                        else if (y > 5)
+                        {
+                            int rand = r.nextInt(2);
+                            
+                            if (rand == 0)
+                                newType = Block.BlockType.BlockType_Dirt;
+                            else
+                                newType = Block.BlockType.BlockType_Stone;
+                        }
+                        else if (y > 0)
+                        {
+                            int rand = r.nextInt(3);
+                            
+                            switch (rand)
+                            {
+                                case 0:
+                                {
+                                    newType = Block.BlockType.BlockType_Dirt;
+                                    break;
+                                }
+                                case 1:
+                                {
+                                    newType = Block.BlockType.BlockType_Stone;
+                                    break;
+                                }
+                                case 2:
+                                {   
+                                    newType = Block.BlockType.BlockType_Bedrock;
+                                    break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            newType = Block.BlockType.BlockType_Bedrock;
+                        }
+                        Blocks[(int)x][(int)y][(int)z].setType(newType);
+                        
                         VertexPositionData.put(createCube((float)(startX + x 
                                 * CUBE_LENGTH), (float)(y * CUBE_LENGTH + (int)
                                         (CHUNK_SIZE * .8)), (float)(startZ + z * 
@@ -140,6 +208,8 @@ public class Chunk {
                         VertexTextureData.put(createTexCube((float) 0, (float) 0,
                                 Blocks[(int)(x)][(int)(y)][(int)(z)]));
                     }
+                    
+                    
                 }
             }
         }
