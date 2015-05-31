@@ -6,12 +6,16 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import static org.lwjgl.opengl.GL11.*;
 import org.lwjgl.util.glu.GLU;
+import java.nio.FloatBuffer;
+import org.lwjgl.BufferUtils;
 
 
 public class Driver 
 {
     private FPCameraController fp;
     private DisplayMode displayMode;
+    private FloatBuffer lightPosition;
+    private FloatBuffer whiteLight;
         
     public void start()
     {
@@ -71,7 +75,24 @@ public class Driver
         glEnable(GL_TEXTURE_2D);
         glEnableClientState(GL_TEXTURE_COORD_ARRAY);
         
+        //following lines for lighting
+        initLightArrays();
+        glLight(GL_LIGHT0, GL_POSITION, lightPosition); //sets light position
+        glLight(GL_LIGHT0, GL_SPECULAR, whiteLight); //sets specular light
+        glLight(GL_LIGHT0, GL_DIFFUSE, whiteLight); //sets diffuse light
+        glLight(GL_LIGHT0, GL_AMBIENT, whiteLight); //sets ambient light
         
+        glEnable(GL_LIGHTING); //enables our light
+        glEnable(GL_LIGHT0); //enables light0
+    }
+    
+    //this method initializes lighting
+    private void initLightArrays() {
+        lightPosition = BufferUtils.createFloatBuffer(4);
+        lightPosition.put(0.0f).put(0.0f).put(0.0f).put(1.0f).flip();
+        
+        whiteLight = BufferUtils.createFloatBuffer(4);
+        whiteLight.put(1.0f).put(1.0f).put(1.0f).put(0.0f).flip();
     }
         
     public static void main(String[] args)
