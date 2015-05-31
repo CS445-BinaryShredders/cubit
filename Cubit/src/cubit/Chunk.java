@@ -131,12 +131,10 @@ public class Chunk {
                 height /= octaves;
                 height = (int) height;
                 
-                
                 for (float y = 0; y < CHUNK_SIZE; y++) {
                     //not sure if this is how we're supposed to do this
                     if (y < height)
                     {
-                        
                         Block.BlockType newType = Block.BlockType.BlockType_Grass;
                         if (y == height - 1)
                         {
@@ -160,7 +158,6 @@ public class Chunk {
                                     break;
                                 }
                             }
-                            
                         }
                         else if (y > 5)
                         {
@@ -208,8 +205,6 @@ public class Chunk {
                         VertexTextureData.put(createTexCube((float) 0, (float) 0,
                                 Blocks[(int)(x)][(int)(y)][(int)(z)]));
                     }
-                    
-                    
                 }
             }
         }
@@ -226,7 +221,6 @@ public class Chunk {
         glBindBuffer(GL_ARRAY_BUFFER, VBOTextureHandle);
         glBufferData(GL_ARRAY_BUFFER, VertexTextureData, GL_STATIC_DRAW);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
-        
     }
     
     private float[] createCubeVertexCol(float[] CubeColorArray) {

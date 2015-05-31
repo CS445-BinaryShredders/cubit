@@ -49,9 +49,9 @@ public class FPCameraController
         position = new Vector3f(x, y, z);
         lPosition = new Vector3f(x, y, z);
         
-        lPosition.x = 0f;
-        lPosition.y = 15f; /// What does this change?
-        lPosition.z = 0f;
+        lPosition.x = 30f;
+        lPosition.y = 70f; /// What does this change?
+        lPosition.z = 30f;
     }
     
     /**
@@ -88,8 +88,8 @@ public class FPCameraController
         
         //for lighting
         FloatBuffer lightPosition = BufferUtils.createFloatBuffer(4);
-        lightPosition.put(lPosition.x -= xOffset).put(lPosition.y).put(
-                lPosition.z += zOffset).put(1.0f).flip();
+        //lightPosition.put(lPosition.x -= xOffset).put(lPosition.y).put(
+                //lPosition.z += zOffset).put(1.0f).flip();
         glLight(GL_LIGHT0, GL_POSITION, lightPosition);
     }
     
@@ -107,8 +107,8 @@ public class FPCameraController
         
         //for lighting
         FloatBuffer lightPosition = BufferUtils.createFloatBuffer(4);
-        lightPosition.put(lPosition.x -= xOffset).put(lPosition.y).put(
-                lPosition.z += zOffset).put(1.0f).flip();
+        //lightPosition.put(lPosition.x += xOffset).put(lPosition.y).put(
+                //lPosition.z -= zOffset).put(1.0f).flip();
         glLight(GL_LIGHT0, GL_POSITION, lightPosition);
     }
     
@@ -126,8 +126,8 @@ public class FPCameraController
         
         //for lighting
         FloatBuffer lightPosition = BufferUtils.createFloatBuffer(4);
-        lightPosition.put(lPosition.x -= xOffset).put(lPosition.y).put(
-                lPosition.z += zOffset).put(1.0f).flip();
+        //lightPosition.put(lPosition.x += xOffset).put(lPosition.y).put(
+                //lPosition.z -= zOffset).put(1.0f).flip();
         glLight(GL_LIGHT0, GL_POSITION, lightPosition);
     }
     
@@ -145,8 +145,8 @@ public class FPCameraController
         
         //for lighting
         FloatBuffer lightPosition = BufferUtils.createFloatBuffer(4);
-        lightPosition.put(lPosition.x -= xOffset).put(lPosition.y).put(
-                lPosition.z += zOffset).put(1.0f).flip();
+        //lightPosition.put(lPosition.x += xOffset).put(lPosition.y).put(
+                //lPosition.z -= zOffset).put(1.0f).flip();
         glLight(GL_LIGHT0, GL_POSITION, lightPosition);
     }
     
@@ -204,7 +204,7 @@ public class FPCameraController
         float lastTime = 0.0f;
         long time = 0;
         float mouseSensitivity = 0.09f;
-        float movementSpeed = 0.2f;
+        float movementSpeed = 0.6f;
         
         // Hide the mouse
         Mouse.setGrabbed(true);

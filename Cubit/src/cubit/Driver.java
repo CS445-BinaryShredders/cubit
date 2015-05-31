@@ -92,7 +92,7 @@ public class Driver
         lightPosition.put(0.0f).put(0.0f).put(0.0f).put(1.0f).flip();
         
         whiteLight = BufferUtils.createFloatBuffer(4);
-        whiteLight.put(1.0f).put(1.0f).put(1.0f).put(0.0f).flip();
+        whiteLight.put(2.0f).put(2.0f).put(2.0f).put(0.0f).flip();
     }
         
     public static void main(String[] args)
